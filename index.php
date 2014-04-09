@@ -184,7 +184,7 @@ Clever::setToken("DEMO_TOKEN");
 	
 											?> 
 						
-					                    </select>
+					                    </select> <br />(Student options will update based on your section selection.)
 										
 
                                     </div>
