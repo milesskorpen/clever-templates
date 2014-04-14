@@ -7,7 +7,6 @@ Currently has two templates (a diploma and a student of the week form), but is e
 
 TODOs
 
-- Update the teacher based on the selection from the drop down menu
 - Get a real API key and test with live data & implement OAuth
 - Print to PDF capability
 - Improve / expand template library
