@@ -45,6 +45,17 @@ Clever::setToken("DEMO_TOKEN");
 		
 </head>
 <body>
+	
+	
+	<?php
+	
+		if (empty($_GET)) {
+		    $main_teacher_id = "509fbd7ec474fab64a8e9d53";
+		} else {
+			$main_teacher_id = $_GET["q"];
+		};
+		
+	?>
 
     <!-- navbar -->
     <header class="navbar navbar-inverse" role="banner">
@@ -54,13 +65,11 @@ Clever::setToken("DEMO_TOKEN");
         <nav class="collapse navbar-collapse" role="navigation">
             <ul class="nav navbar-nav" style="float: right;">
 				<li style="margin-top:10px;">
-                    <select style="width:250px;" class="select2">
+                    <select style="width:250px;" class="select2" onchange="window.location.href = this.options[this.selectedIndex].value">
 						
 						
 						<?php
 						$teachers = CleverTeacher::all();
-			
-			
 			
 						foreach ($teachers as $teacher) {
 							$teacher_json = json_decode($teacher,true);
@@ -68,7 +77,11 @@ Clever::setToken("DEMO_TOKEN");
 							$teacher_first = $teacher_json['name']['first'];
 							$teacher_last = $teacher_json['name']['last'];
 							
-							echo "<option value=\"$teacher_id\">$teacher_first $teacher_last</option>";
+							if ( $main_teacher_id == $teacher_id ) {
+								echo "<option value=\"$teacher_id\" selected>$teacher_first $teacher_last</option>";
+							} else {
+								echo "<option value=\"index.php?q=$teacher_id\">$teacher_first $teacher_last</option>";
+							};
 						}
 	
 						?> <!-- TODO: Change the displayed teacher when this is changed -->
@@ -94,7 +107,7 @@ Clever::setToken("DEMO_TOKEN");
 						
 						<?php
 						
-							$selected_teacher = Cleverteacher::retrieve("509fbd7ec474fab64a8e9d53");
+							$selected_teacher = Cleverteacher::retrieve($main_teacher_id);
 							$selected_json = json_decode($selected_teacher,true);
 						
 							$district_id = $selected_json['district'];
@@ -243,6 +256,17 @@ Clever::setToken("DEMO_TOKEN");
     <script src="js/theme.js"></script> <!-- Old -->
     <script src="js/fuelux.wizard.js"></script> <!-- Old -->
 	
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-10896834-1', 'milesskorpen.com');
+	  ga('send', 'pageview');
+
+	</script>
+	
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -295,6 +319,7 @@ Clever::setToken("DEMO_TOKEN");
 	
 	
     <script type="text/javascript">
+		
         $(function () {
             var $wizard = $('#fuelux-wizard'),
                 $btnPrev = $('.wizard-actions .btn-prev'),
